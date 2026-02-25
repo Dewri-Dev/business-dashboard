@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Health Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary: #2c7be5;
+            --success: #00d97e;
+            --danger: #e63757;
+            --warning: #f6c343;
+            --dark: #12263f;
+            --gray: #95aac9;
+            --bg: #f9fbfd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--dark);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid #edf2f9;
+            box-shadow: 0 0.75rem 1.5rem rgba(18, 38, 63, 0.03);
+            margin-bottom: 20px;
+        }
+
+        h2, h3 { margin-top: 0; color: var(--dark); }
+
+        /* Summary Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            padding: 15px;
+            background: #f8fafd;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-label { font-size: 12px; color: var(--gray); text-transform: uppercase; font-weight: bold; }
+        .stat-value { font-size: 18px; font-weight: bold; display: block; margin-top: 5px; }
+
+        /* Forms */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-size: 14px; font-weight: 600; }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d2ddec;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        button:hover { opacity: 0.9; }
+        
+        /* Alerts */
+        .alert-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            border-left: 4px solid var(--warning);
+            background: #fff9eb;
+            font-size: 14px;
+            list-style: none;
+        }
+
+        #health-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        canvas { max-width: 100%; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Business Health Dashboard</h1>
+    </header>
+
+    <div class="grid">
+        <!-- Input Section -->
+        <div class="card">
+            <h2>Add Record</h2>
+            <div class="form-group">
+                <label>Date</label>
+                <input type="date" id="date">
+            </div>
+            <div class="form-group">
+                <label>Revenue (₹)</label>
+                <input type="number" id="revenue" placeholder="Enter revenue">
+            </div>
+            <div class="form-group">
+                <label>Expenses (₹)</label>
+                <input type="number" id="expenses" placeholder="Enter expenses">
+            </div>
+            <div class="form-group">
+                <label>Inventory Cost (₹)</label>
+                <input type="number" id="inventory" placeholder="Enter cost">
+            </div>
+            <button onclick="addData()">Save Transaction</button>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>Overview</h2>
+                <div id="health-badge">Score: --</div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-label">Total Revenue</span>
+                    <span class="stat-value" id="res-revenue">₹0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Total Expenses</span>
+                    <span class="stat-value" id="res-expenses">₹0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Net Profit</span>
+                    <span class="stat-value" id="res-profit">₹0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Margin</span>
+                    <span class="stat-value" id="res-margin">0%</span>
+                </div>
+            </div>
+
+            <h3>Alerts & Insights</h3>
+            <div id="alerts-container"></div>
+        </div>
+    </div>
+
+    <!-- Visual Trends Section -->
+    <div class="card">
+        <h2>Performance Trends</h2>
+        <canvas id="trendsChart" height="100"></canvas>
+    </div>
+</div>
+
+<script>
+let trendsChart;
+
+// Initialize Chart
+function initChart(labels = [], revData = [], expData = []) {
+    const ctx = document.getElementById('trendsChart').getContext('2d');
+    if (trendsChart) trendsChart.destroy();
+    
+    trendsChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Revenue',
+                    data: revData,
+                    borderColor: '#2c7be5',
+                    backgroundColor: 'rgba(44, 123, 229, 0.1)',
+                    fill: true,
+                    tension: 0.3
+                },
+                {
+                    label: 'Expenses',
+                    data: expData,
+                    borderColor: '#e63757',
+                    borderDash: [5, 5],
+                    fill: false,
+                    tension: 0.3
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'top' } },
+            scales: {
+                y: { beginAtZero: true, grid: { display: false } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+}
+
+// Add Data
+async function addData() {
+    const payload = {
+        date: document.getElementById("date").value,
+        revenue: parseFloat(document.getElementById("revenue").value) || 0,
+        expenses: parseFloat(document.getElementById("expenses").value) || 0,
+        inventory_cost: parseFloat(document.getElementById("inventory").value) || 0
+    };
+
+    if (!payload.date) {
+        alert("Date is required");
+        return;
+    }
+
+    try {
+        const response = await fetch('/add-data', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(payload)
+        });
+        
+        if (response.ok) {
+            refreshDashboard();
+            // Reset form
+            document.querySelectorAll('input').forEach(i => i.value = '');
+        }
+    } catch (e) {
+        console.error("Submission error", e);
+    }
+}
+
+// Fetch and Update Dashboard
+async function refreshDashboard() {
+    try {
+        // 1. Get Summary
+        const summaryRes = await fetch('/summary');
+        const summary = await summaryRes.json();
+
+        document.getElementById("res-revenue").innerText = `₹${summary.revenue.toLocaleString()}`;
+        document.getElementById("res-expenses").innerText = `₹${summary.expenses.toLocaleString()}`;
+        document.getElementById("res-profit").innerText = `₹${summary.profit.toLocaleString()}`;
+        document.getElementById("res-margin").innerText = `${summary.profit_margin}%`;
+        
+        const badge = document.getElementById("health-badge");
+        badge.innerText = `Score: ${summary.health_score}`;
+        badge.style.backgroundColor = summary.health_score > 70 ? '#00d97e' : (summary.health_score > 40 ? '#f6c343' : '#e63757');
+
+        const alertsBox = document.getElementById("alerts-container");
+        alertsBox.innerHTML = summary.alerts.map(a => `<div class="alert-item">${a}</div>`).join('');
+
+        // 2. Get Trends for Chart
+        const trendsRes = await fetch('/trends');
+        const trends = await trendsRes.json();
+        
+        // Sort by date before charting
+        trends.sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        const labels = trends.map(t => t.date);
+        const revenues = trends.map(t => t.revenue);
+        const expenses = trends.map(t => t.expenses);
+        
+        initChart(labels, revenues, expenses);
+
+    } catch (e) {
+        console.error("Refresh error", e);
+    }
+}
+
+// Load on start
+window.onload = refreshDashboard;
+</script>
+
+</body>
+</html>
