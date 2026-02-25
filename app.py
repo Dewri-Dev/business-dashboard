@@ -1,156 +1,121 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
-import sqlite3
 import webbrowser
+import threading
+from utils.db import init_db, get_connection
+from utils.calculations import calculate_health_score, generate_alerts
 
 app = Flask(__name__)
 CORS(app)
 
-DB_NAME = "database.db"
-
-# ---------- DATABASE SETUP ----------
-def init_db():
-    conn = sqlite3.connect(DB_NAME)
-    cursor = conn.cursor()
-
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS business_data (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            date TEXT,
-            revenue REAL,
-            expenses REAL,
-            inventory_cost REAL
-        )
-    ''')
-
-    conn.commit()
-    conn.close()
-
+# Initialize the database on startup
 init_db()
 
-# ---------- HOME  ----------
 @app.route("/")
+def home():
+    """Renders the landing page."""
+    return render_template("home.html")
+
+@app.route("/dashboard")
 def dashboard():
-    return render_template("index.html")
+    """Renders the main analytics dashboard."""
+    return render_template("dashboard.html")
 
-
-# ---------- ADD DATA ----------
-@app.route('/add-data', methods=['POST'])
+@app.route("/add-data", methods=["POST"])
 def add_data():
+    """Adds a new financial record with validation."""
     data = request.get_json()
-
-    if not data:
-        return jsonify({"error": "No JSON data provided"}), 400
+    
+    # Required fields validation
+    required = ["date", "revenue", "expenses", "inventory_cost", "category"]
+    if not data or not all(k in data for k in required):
+        return jsonify({"error": f"Missing required fields: {required}"}), 400
 
     try:
-        conn = sqlite3.connect(DB_NAME)
+        conn = get_connection()
         cursor = conn.cursor()
-
-        cursor.execute('''
-            INSERT INTO business_data (date, revenue, expenses, inventory_cost)
-            VALUES (?, ?, ?, ?)
-        ''', (
-            data.get('date'),
-            data.get('revenue', 0),
-            data.get('expenses', 0),
-            data.get('inventory_cost', 0)
+        cursor.execute("""
+            INSERT INTO business_data 
+            (date, revenue, expenses, inventory_cost, category)
+            VALUES (?, ?, ?, ?, ?)
+        """, (
+            data["date"],
+            float(data.get("revenue", 0)),
+            float(data.get("expenses", 0)),
+            float(data.get("inventory_cost", 0)),
+            data.get("category", "General")
         ))
-
         conn.commit()
-        conn.close()
-
-        return jsonify({"message": "Data added successfully"})
-
+        return jsonify({"message": "Data recorded successfully", "status": "success"}), 201
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
 
-
-# ---------- HEALTH SCORE ----------
-def calculate_health_score(revenue, expenses, profit):
-    score = 100
-
-    if profit < 0:
-        score -= 30
-    else:
-        score += 10
-
-    if revenue > 0 and expenses / revenue > 0.8:
-        score -= 20
-
-    if profit > 0:
-        score += 10
-
-    return max(0, min(score, 100))
-
-
-# ---------- SUMMARY ----------
-@app.route('/summary', methods=['GET'])
+@app.route("/summary", methods=["GET"])
 def summary():
-    conn = sqlite3.connect(DB_NAME)
-    cursor = conn.cursor()
+    """Calculates high-level business metrics and health scores."""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        
+        # Fetch aggregates
+        cursor.execute("""
+            SELECT 
+                SUM(revenue), 
+                SUM(expenses), 
+                SUM(inventory_cost) 
+            FROM business_data
+        """)
+        result = cursor.fetchone()
+        
+        rev = result[0] or 0
+        exp = result[1] or 0
+        inv = result[2] or 0
+        
+        profit = rev - exp
+        margin = (profit / rev * 100) if rev > 0 else 0
+        
+        # Logic from calculations utility
+        health_score = calculate_health_score(rev, exp, profit)
+        alerts = generate_alerts(rev, exp, profit, margin)
 
-    cursor.execute("SELECT SUM(revenue), SUM(expenses) FROM business_data")
-    result = cursor.fetchone()
-
-    total_revenue = result[0] or 0
-    total_expenses = result[1] or 0
-
-    profit = total_revenue - total_expenses
-
-    profit_margin = 0
-    if total_revenue > 0:
-        profit_margin = (profit / total_revenue) * 100
-
-    health_score = calculate_health_score(total_revenue, total_expenses, profit)
-
-    alerts = []
-
-    if profit < 0:
-        alerts.append("Business running at loss")
-
-    if total_revenue > 0 and total_expenses / total_revenue > 0.8:
-        alerts.append("Expenses too high")
-
-    if 0 < profit_margin < 10:
-        alerts.append("Low profit margin")
-
-    if not alerts:
-        alerts.append("Business stable")
-
-    conn.close()
-
-    return jsonify({
-        "revenue": total_revenue,
-        "expenses": total_expenses,
-        "profit": profit,
-        "profit_margin": round(profit_margin, 2),
-        "health_score": health_score,
-        "alerts": alerts
-    })
-
-
-# ---------- TRENDS ----------
-@app.route('/trends', methods=['GET'])
-def trends():
-    conn = sqlite3.connect(DB_NAME)
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT date, revenue, expenses FROM business_data")
-    rows = cursor.fetchall()
-    conn.close()
-
-    data = []
-    for row in rows:
-        data.append({
-            "date": row[0],
-            "revenue": row[1],
-            "expenses": row[2]
+        return jsonify({
+            "metrics": {
+                "total_revenue": round(rev, 2),
+                "total_expenses": round(exp, 2),
+                "total_inventory": round(inv, 2),
+                "net_profit": round(profit, 2),
+                "profit_margin": round(margin, 2)
+            },
+            "health_score": health_score,
+            "alerts": alerts
         })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
 
-    return jsonify(data)
+@app.route("/trends", methods=["GET"])
+def trends():
+    """Returns historical data for charts."""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT date, revenue, expenses, category FROM business_data ORDER BY date ASC")
+        rows = cursor.fetchall()
+        
+        data = [{"date": r[0], "revenue": r[1], "expenses": r[2], "category": r[3]} for r in rows]
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
 
+def open_browser():
+    webbrowser.open_new("http://127.0.0.1:5000")
 
-if __name__ == '__main__':
-    # Automatically open the browser when the script runs
-    webbrowser.open("http://127.0.0.1:5000")
+if __name__ == "__main__":
+    # Start browser in a separate thread so it doesn't block the server
+    threading.Timer(1, open_browser).start()
     app.run(debug=True)
