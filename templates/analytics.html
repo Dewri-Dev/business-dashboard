@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Real-time Analytics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        :root {
+            --primary: #2c7be5;
+            --primary-light: #e3effc;
+            --success: #00d97e;
+            --success-light: #ccf7e5;
+            --danger: #e63757;
+            --danger-light: #fad7dd;
+            --warning: #f6c343;
+            --warning-light: #fdf3d9;
+            --dark: #12263f;
+            --gray: #95aac9;
+            --bg: #f9fbfd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--dark);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            color: var(--dark);
+            margin: 0 0 12px 0;
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        p.subtitle {
+            color: var(--gray);
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #edf2f9;
+            box-shadow: 0 10px 30px rgba(18, 38, 63, 0.05);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 600px) {
+            .stats-grid { grid-template-columns: 1fr; }
+        }
+
+        .stat-item {
+            padding: 24px;
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #edf2f9;
+            box-shadow: 0 4px 6px rgba(18, 38, 63, 0.02);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(18, 38, 63, 0.06);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-label { 
+            font-size: 14px; 
+            color: var(--gray); 
+            text-transform: uppercase; 
+            font-weight: 700; 
+            letter-spacing: 0.8px;
+        }
+
+        .icon-box {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-primary { background: var(--primary-light); color: var(--primary); }
+        .icon-danger { background: var(--danger-light); color: var(--danger); }
+        .icon-success { background: var(--success-light); color: var(--success); }
+        .icon-warning { background: var(--warning-light); color: var(--warning); }
+
+        .stat-value { 
+            font-size: 32px; 
+            font-weight: 800; 
+            display: block; 
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .text-success { color: var(--success); }
+        .text-danger { color: var(--danger); }
+        .text-primary { color: var(--primary); }
+
+        /* Progress bar for margin */
+        .progress-bg {
+            height: 6px;
+            background: #edf2f9;
+            border-radius: 10px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: var(--success);
+            transition: width 1s ease-in-out;
+        }
+
+        .footer-actions {
+            text-align: center;
+            border-top: 1px solid #edf2f9;
+            padding-top: 30px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background-color: white;
+            color: var(--primary);
+            text-decoration: none;
+            border: 2px solid var(--primary-light);
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .back-link:hover {
+            background-color: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .back-link svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.2s;
+        }
+
+        .back-link:hover svg {
+            transform: translateX(-4px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Real-time Analytics</h1>
+            <p class="subtitle">Live snapshot of your business financials & performance</p>
+        </header>
+
+        <div class="card">
+            <div class="stats-grid">
+                
+                <!-- Revenue -->
+                <div class="stat-item">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Revenue</span>
+                        <div class="icon-box icon-primary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        </div>
+                    </div>
+                    <span class="stat-value text-primary">₹{{ summary.revenue }}</span>
+                </div>
+                
+                <!-- Expenses -->
+                <div class="stat-item">
+                    <div class="stat-header">
+                        <span class="stat-label">Total Expenses</span>
+                        <div class="icon-box icon-danger">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"></path><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"></path></svg>
+                        </div>
+                    </div>
+                    <span class="stat-value">₹{{ summary.expenses }}</span>
+                </div>
+                
+                <!-- Net Profit -->
+                <div class="stat-item">
+                    <div class="stat-header">
+                        <span class="stat-label">Net Profit</span>
+                        <div class="icon-box {% if summary.profit >= 0 %}icon-success{% else %}icon-danger{% endif %}">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        </div>
+                    </div>
+                    <span class="stat-value {% if summary.profit >= 0 %}text-success{% else %}text-danger{% endif %}">
+                        ₹{{ summary.profit }}
+                    </span>
+                </div>
+                
+                <!-- Profit Margin -->
+                <div class="stat-item">
+                    <div class="stat-header">
+                        <span class="stat-label">Profit Margin</span>
+                        <div class="icon-box icon-warning">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg>
+                        </div>
+                    </div>
+                    <span class="stat-value">{{ summary.profit_margin }}%</span>
+                    
+                    <!-- Dynamic Progress Bar based on margin % -->
+                    <div class="progress-bg">
+                        <!-- Cleaner Jinja setup to avoid VS Code CSS warnings -->
+                        {% set p_width = 100 if summary.profit_margin > 100 else (0 if summary.profit_margin < 0 else summary.profit_margin) %}
+                        {% set p_color = 'var(--success)' if summary.profit_margin >= 20 else ('var(--warning)' if summary.profit_margin >= 0 else 'var(--danger)') %}
+                        
+                        <div class="progress-fill" style="width: {{ p_width }}%; background-color: {{ p_color }};"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer-actions">
+                <a href="/dashboard" class="back-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                    Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

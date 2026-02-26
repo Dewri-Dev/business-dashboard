@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Risk Alerts</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-900 text-white min-h-screen flex flex-col items-center p-10">
+
+    <h1 class="text-4xl font-bold mb-8">Early Risk Alerts</h1>
+
+    <form method="POST" class="space-y-4 w-full max-w-md">
+
+        <input type="number" name="current_revenue" placeholder="Current Month Revenue"
+               class="w-full p-3 rounded bg-slate-800 text-white" required>
+
+        <input type="number" name="previous_revenue" placeholder="Previous Month Revenue"
+               class="w-full p-3 rounded bg-slate-800 text-white" required>
+
+        <input type="number" name="current_expenses" placeholder="Current Month Expenses"
+               class="w-full p-3 rounded bg-slate-800 text-white" required>
+
+        <input type="number" name="previous_expenses" placeholder="Previous Month Expenses"
+               class="w-full p-3 rounded bg-slate-800 text-white" required>
+
+        <input type="number" name="inventory_cost" placeholder="Inventory Cost"
+               class="w-full p-3 rounded bg-slate-800 text-white" required>
+
+        <button type="submit"
+                class="w-full bg-red-500 hover:bg-red-600 p-3 rounded font-semibold">
+            Analyze Risk
+        </button>
+    </form>
+
+    {% if alerts %}
+    <div class="mt-8 w-full max-w-md bg-slate-800 p-6 rounded-xl">
+        <h2 class="text-xl font-semibold mb-4">Active Alerts</h2>
+        <ul class="space-y-2">
+            {% for alert in alerts %}
+                <li class="text-slate-300">{{ alert }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <a href="/" class="mt-6 text-blue-400">← Back to Dashboard</a>
+
+</body>
+</html>

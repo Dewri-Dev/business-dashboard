@@ -30,6 +30,8 @@
 
         .hover-lift {
             transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: block; /* Ensures anchor tags behave like blocks */
+            text-decoration: none;
         }
 
         .hover-lift:hover {
@@ -49,9 +51,10 @@
             <span class="text-xl font-bold tracking-tight">BizHealth</span>
         </div>
         <div class="hidden md:flex space-x-8 text-sm font-medium">
-            <a href="/dashboard" class="text-slate-400 hover:text-white transition">Insights</a>
-            <a href="#" class="text-slate-400 hover:text-white transition">Reports</a>
-            <a href="#" class="text-slate-400 hover:text-white transition">Settings</a>
+            <a href="/dashboard" class="text-slate-400 hover:text-white transition">Dashboard</a>
+            <a href="/analytics" class="text-slate-400 hover:text-white transition">Analytics</a>
+            <a href="/trends-page" class="text-slate-400 hover:text-white transition">Trends</a>
+            <a href="/health-page" class="text-slate-400 hover:text-white transition">Health</a>
         </div>
     </nav>
 
@@ -59,11 +62,11 @@
     <main class="flex-grow flex flex-col items-center justify-center px-6 py-12 text-center">
         <div class="max-w-4xl">
             <h1 class="text-5xl md:text-7xl font-extrabold mb-6 tracking-tight">
-                Master Your <span class="hero-gradient">Business Vitals</span>
+              Know If Your <span class="hero-gradient">Business Is Healthy</span> in Minutes
             </h1>
             <p class="text-lg md:text-xl text-slate-400 mb-10 max-w-2xl mx-auto leading-relaxed">
-                A high-precision dashboard designed for modern entrepreneurs. Track margins, 
-                visualize growth trends, and receive automated health scores in real-time.
+                Small business owners like you track revenue and expenses every day, but often don’t know if their business is truly growing or at risk.
+  This dashboard turns your numbers into simple growth signals, risk alerts, and a clear health score, so you can take action early.
             </p>
 
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-16">
@@ -76,31 +79,44 @@
                 </button>
             </div>
 
-            <!-- Features Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
-                <div class="glass p-6 rounded-2xl hover-lift">
-                    <div class="w-10 h-10 bg-sky-500/10 rounded-lg flex items-center justify-center mb-4">
+            <!-- Features Grid (Now fully clickable routing to your new Flask functions) -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+                <a href="/analytics" class="glass p-6 rounded-2xl hover-lift group">
+                    <div class="w-10 h-10 bg-sky-500/10 rounded-lg flex items-center justify-center mb-4 transition group-hover:bg-sky-500/20">
                         <i data-lucide="bar-chart-3" class="text-sky-400 w-6 h-6"></i>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Real-time Analytics</h3>
-                    <p class="text-sm text-slate-400">Precision tracking of every dollar moving through your operation.</p>
-                </div>
+                    <h3 class="font-bold text-lg mb-2 text-white">Cash Flow Overview</h3>
+                    <p class="text-sm text-slate-400">Track your revenue, expenses, and net profit in one simple view. Instantly see whether you're operating at a profit or loss.</p>
+                </a>
 
-                <div class="glass p-6 rounded-2xl hover-lift">
-                    <div class="w-10 h-10 bg-indigo-500/10 rounded-lg flex items-center justify-center mb-4">
+                <a href="/trends-page" class="glass p-6 rounded-2xl hover-lift group">
+                    <div class="w-10 h-10 bg-indigo-500/10 rounded-lg flex items-center justify-center mb-4 transition group-hover:bg-indigo-500/20">
                         <i data-lucide="trending-up" class="text-indigo-400 w-6 h-6"></i>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Trend Analysis</h3>
-                    <p class="text-sm text-slate-400">Visualize monthly growth and expenses with beautiful interactive charts.</p>
-                </div>
+                    <h3 class="font-bold text-lg mb-2 text-white">Monthly Growth Tracking</h3>
+                    <p class="text-sm text-slate-400">Monitor month-over-month changes in revenue and expenses to understand growth patterns and identify unusual shifts early.</p>
+                </a>
 
-                <div class="glass p-6 rounded-2xl hover-lift">
-                    <div class="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-4">
+                <a href="/health-page" class="glass p-6 rounded-2xl hover-lift group">
+                    <div class="w-10 h-10 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-4 transition group-hover:bg-emerald-500/20">
                         <i data-lucide="shield-check" class="text-emerald-400 w-6 h-6"></i>
                     </div>
-                    <h3 class="font-bold text-lg mb-2">Health Scoring</h3>
-                    <p class="text-sm text-slate-400">Automated risk assessment and performance alerts based on custom logic.</p>
-                </div>
+                    <h3 class="font-bold text-lg mb-2 text-white">Business Health Score</h3>
+                    <p class="text-sm text-slate-400">Get a simple health rating based on profit margin, cash flow stability, and growth trends — with clear signals: Stable, Monitor, or At Risk.</p>
+                </a>
+
+                <a href="/alerts-page" class="glass p-6 rounded-2xl hover-lift group">
+                    <div class="w-10 h-10 bg-red-500/10 rounded-lg flex items-center justify-center mb-4 transition group-hover:bg-red-500/20">
+                         <i data-lucide="alert-triangle" class="text-red-400 w-6 h-6"></i>
+                    </div>
+
+                     <h3 class="font-bold text-lg mb-2 text-white">Early Risk Alerts</h3>
+
+                     <p class="text-sm text-slate-400">
+                          Get early warnings when expenses spike, profit margins decline, 
+                            or inventory buildup begins to impact your cash flow — before it becomes critical.
+                     </p>
+                </a>
             </div>
         </div>
     </main>

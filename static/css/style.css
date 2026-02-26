@@ -1,0 +1,49 @@
+/* Global Reset & Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* STEP 3 — Make Homepage Cards Look Clickable */
+.feature-box {
+    text-decoration: none; /* Removes the underline from links */
+    color: inherit;         /* Keeps the text color white */
+    display: block;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+}
+
+/* Hover effect for the three cards */
+.feature-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    border-color: rgba(56, 189, 248, 0.4); /* Glow effect color */
+    background-color: #243147; /* Slightly lighter blue on hover */
+}
+
+/* Dashboard Section Spacing */
+section {
+    padding-top: 20px;
+    margin-bottom: 40px;
+}
+
+/* Health Bar Animation */
+#health-bar {
+    transition: width 1.5s ease-in-out, background-color 0.5s ease;
+}
+
+/* Form Styling */
+input, select {
+    outline: none;
+}
+
+input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+}
