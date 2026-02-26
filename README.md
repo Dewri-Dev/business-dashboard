@@ -1,5 +1,5 @@
 # Bizhealt
-
+Website link: https://bizhealth.onrender.com
 # 📊 Business Dashboard
 
 ![License](https://img.shields.io/github/license/Dewri-Dev/buisness-dashboard)
@@ -23,7 +23,7 @@ A high-performance, responsive business intelligence dashboard designed to visua
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** [e.g., React.js, Tailwind CSS, TypeScript]
+- **Frontend:** Python,
 - **Charts:** [e.g., Chart.js, Recharts, or D3.js]
 - **Backend:** [e.g., Node.js, Express, or Firebase]
 - **Database:** [e.g., MongoDB, PostgreSQL]
