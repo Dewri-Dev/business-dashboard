@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 DB_NAME = "database.db"
 
@@ -7,10 +8,21 @@ def get_connection():
     return sqlite3.connect(DB_NAME)
 
 def init_db():
-    """Initializes the database and creates the necessary tables."""
+    """Initializes the database by wiping old data and creating fresh tables."""
+    
+    # --- NEW: Automatically delete the old database file if it exists ---
+    if os.path.exists(DB_NAME):
+        try:
+            os.remove(DB_NAME)
+            print("Old database wiped. Starting fresh!")
+        except PermissionError:
+            print("Could not delete DB. It might be open in another program.")
+    # --------------------------------------------------------------------
+
     conn = get_connection()
     cursor = conn.cursor()
 
+    # Create the fresh table
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS business_data (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -35,6 +35,27 @@
             margin-bottom: 30px;
         }
 
+        .sidebar {
+            background-color: var(--dark);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .sidebar a:hover {
+            color: var(--primary);
+        }
+
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -131,6 +152,15 @@
 <body>
 
 <div class="container">
+    <div class="sidebar">
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/analytics">Analytics</a>
+        <a href="/trends-page">Trends</a>
+        <a href="/health-page">Health</a>
+        <a href="/alerts-page">Alerts</a>
+    </div>
+
     <header>
         <h1>Business Health Dashboard</h1>
     </header>

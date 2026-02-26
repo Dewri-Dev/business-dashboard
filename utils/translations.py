@@ -1,0 +1,59 @@
+# Dictionary containing all translations for the application
+LANGUAGES = {
+    'en': {
+        'nav_dashboard': 'Dashboard',
+        'nav_analytics': 'Analytics',
+        'nav_trends': 'Trends',
+        'nav_health': 'Health',
+        'nav_alerts': 'Alerts',
+        'nav_login': 'Login',
+        
+        'hero_title_start': 'Know If Your',
+        'hero_highlight': 'Business Is Healthy',
+        'hero_title_end': 'in Minutes',
+        'hero_desc': 'Small business owners like you track revenue and expenses every day, but often don’t know if their business is truly growing or at risk. This dashboard turns your numbers into simple growth signals, risk alerts, and a clear health score, so you can take action early.',
+        
+        # Updated English text for the button
+        'btn_enter': 'Start Analyzing My Business',
+        'btn_demo': 'View Demo',
+        
+        'feat1_title': 'Cash Flow Overview',
+        'feat1_desc': "Track your revenue, expenses, and net profit in one simple view. Instantly see whether you're operating at a profit or loss.",
+        'feat2_title': 'Monthly Growth Tracking',
+        'feat2_desc': 'Monitor month-over-month changes in revenue and expenses to understand growth patterns and identify unusual shifts early.',
+        'feat3_title': 'Business Health Score',
+        'feat3_desc': 'Get a simple health rating based on profit margin, cash flow stability, and growth trends — with clear signals: Stable, Monitor, or At Risk.',
+        'feat4_title': 'Early Risk Alerts',
+        'feat4_desc': 'Get early warnings when expenses spike, profit margins decline, or inventory buildup begins to impact your cash flow — before it becomes critical.',
+        
+        'footer_text': '© 2026 BizHealth Analytics. Built with Flask, SQLite & Chart.js'
+    },
+    'as': {
+        'nav_dashboard': 'ডেশ্ববৰ্ড',
+        'nav_analytics': 'এনালাইটিক্স',
+        'nav_trends': 'ট্ৰেণ্ডসমূহ',
+        'nav_health': 'স্বাস্থ্য',
+        'nav_alerts': 'এলাৰ্টসমূহ',
+        'nav_login': 'লগ ইন',
+        
+        'hero_title_start': 'আপোনাৰ',
+        'hero_highlight': 'ব্যৱসায় সুস্থ নেকি',
+        'hero_title_end': 'মাত্ৰ কেইমিনিট মানত জানক',
+        'hero_desc': 'আপোনাৰ দৰে সৰু ব্যৱসায়ীসকলে প্ৰতিদিনে উপাৰ্জন আৰু ব্যয়ৰ হিচাপ ৰাখে, কিন্তু ব্যৱসায়টো প্ৰকৃততে বৃদ্ধি পাইছে নে বিপদত আছে সেয়া প্ৰায়ে নাজানে। এই ডেশ্ববৰ্ডে আপোনাৰ তথ্যসমূহক সৰল বিকাশৰ সংকেত, বিপদৰ এলাৰ্ট, আৰু স্পষ্ট স্বাস্থ্য স্ক\'ৰলৈ পৰিৱৰ্তন কৰে, যাতে আপুনি সোনকালেই ব্যৱস্থা গ্ৰহণ কৰিব পাৰে।',
+        
+        # Updated Assamese text for the button
+        'btn_enter': 'মোৰ ব্যৱসায় বিশ্লেষণ আৰম্ভ কৰক',
+        'btn_demo': 'ডেমো চাওক',
+        
+        'feat1_title': 'কেছ ফ্ল\' অ\'ভাৰভিউ',
+        'feat1_desc': 'আপোনাৰ উপাৰ্জন, ব্যয়, আৰু মুঠ লাভ এটা সৰল দৃশ্যত ট্ৰেক কৰক। আপুনি লাভ নে লোকচানত চলি আছে সেয়া লগে লগে চাওক।',
+        'feat2_title': 'মাহিলী বিকাশৰ ট্ৰেকিং',
+        'feat2_desc': 'বিকাশৰ আৰ্হি বুজিবলৈ আৰু অস্বাভাৱিক পৰিৱৰ্তনসমূহ সোনকালে চিনাক্ত কৰিবলৈ উপাৰ্জন আৰু ব্যয়ৰ মাহেকীয়া পৰিৱৰ্তনসমূহ নিৰীক্ষণ কৰক।',
+        'feat3_title': 'ব্যৱসায়িক স্বাস্থ্যৰ স্ক\'ৰ',
+        'feat3_desc': 'লাভৰ হাৰ, নগদ ধনৰ প্ৰবাহৰ স্থিৰতা আৰু বিকাশৰ ধাৰাৰ ওপৰত ভিত্তি কৰি এটা সৰল স্বাস্থ্য ৰেটিং পাওক — স্পষ্ট সংকেতৰ সৈতে: সুস্থিৰ, নিৰীক্ষণ কৰক, বা বিপদত।',
+        'feat4_title': 'আগতীয়া বিপদৰ এলাৰ্ট',
+        'feat4_desc': 'ব্যয় বৃদ্ধি পালে, লাভৰ হাৰ কমিলে বা ইনভেণ্টৰী জমা হৈ নগদ ধনৰ প্ৰবাহত প্ৰভাৱ পেলালে পৰিস্থিতি বেয়া হোৱাৰ আগতেই আগতীয়া সতৰ্কবাণী পাওক।',
+        
+        'footer_text': '© 2026 BizHealth Analytics. ফ্লাস্ক, SQLite আৰু Chart.js ৰ দ্বাৰা নিৰ্মিত'
+    }
+}
