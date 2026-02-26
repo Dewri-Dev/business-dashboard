@@ -19,7 +19,6 @@ A high-performance, responsive business intelligence dashboard designed to visua
 - **User Management:** Secure authentication and role-based access control.
 - **Responsive Design:** Optimized for Desktop, Tablet, and Mobile views.
 - **Dark/Light Mode:** Seamless theme switching for better user experience.
-- **Export Reports:** Download data in CSV, PDF, or Excel formats.
 
 ## 🛠️ Tech Stack
 
