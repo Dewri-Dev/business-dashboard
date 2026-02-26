@@ -23,11 +23,9 @@ A high-performance, responsive business intelligence dashboard designed to visua
 
 ## 🛠️ Tech Stack
 
-- **Frontend:** Python,
-- **Charts:** [e.g., Chart.js, Recharts, or D3.js]
-- **Backend:** [e.g., Node.js, Express, or Firebase]
-- **Database:** [e.g., MongoDB, PostgreSQL]
-- **State Management:** [e.g., Redux Toolkit, Context API]
+- **Frontend:** HTML5,Tailwind CSS,Chart.js,Google Fonts,Lucide Icons
+- **Backend:** Flask,Python,Python Threading
+- **Database:** SQLite3,Flask Sessions
 
 ## 📦 Installation
 
