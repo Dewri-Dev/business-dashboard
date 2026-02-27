@@ -154,6 +154,7 @@ BizHealth visualizes important business indicators such as:
 ## 👨‍💻 Author
 
 **Nayan Dewri**,**Dwibon Bhargab Deka**,**Barnil Mahanta**,**Tanisha Deka**
+
 Developer & Computer Science Student
 Assam, India
 
