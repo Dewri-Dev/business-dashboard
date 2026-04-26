@@ -1,8 +1,8 @@
-# 📊 BizHealth — Business Intelligence Dashboard
+# 📊 BizHealth — Professional Business Intelligence Dashboard
 
 🌐 **Live Website:** https://bizhealth.onrender.com
 
-BizHealth is a modern, high-performance business intelligence dashboard designed to monitor key performance indicators (KPIs), visualize business metrics, and provide actionable insights for smarter decision-making.
+BizHealth is a modern, high-performance SaaS-grade business intelligence dashboard designed to monitor key performance indicators (KPIs), visualize financial metrics, and provide actionable insights for smarter decision-making.
 
 It transforms raw business data into **clear, interactive visual insights** to help track growth, performance, and financial health in real time.
 
@@ -19,67 +19,62 @@ It transforms raw business data into **clear, interactive visual insights** to h
 
 ## 🚀 Overview
 
-BizHealth provides business owners and teams with a centralized dashboard to:
+BizHealth provides business owners and teams with a centralized, professional dashboard to:
 
-✔ monitor revenue and sales performance
-✔ track business growth trends
-✔ visualize key metrics with interactive charts
-✔ make data-driven decisions quickly
+✔ Monitor revenue and expense performance in real-time
+✔ Track business growth trends with Month-over-Month (MoM) signals
+✔ Visualize revenue distribution by category (Sales, Marketing, Operations, etc.)
+✔ Analyze business "Vitality Index" (Health Score)
+✔ Run risk simulations to detect potential financial bottlenecks
 
 ---
 
 ## ✨ Key Features
 
-### 📈 Real-Time Analytics
+### 📈 Professional Analytics & Forecasting
+* **Real-Time KPI Cards:** Track Total Revenue, Expenses, Net Profit, and Health Score.
+* **Interactive Trends:** Dynamic line charts powered by Chart.js with smooth gradients and custom tooltips.
+* **Revenue Forecasting:** Automated 3-month moving average engine to predict next month's performance.
+* **Category Breakdown:** Interactive donut charts showing where your money is coming from.
 
-* Monitor sales and revenue performance instantly
-* Live data updates for current business insights
+### 🔔 Smart Risk Alerts
+* **Notification System:** A functional bell icon with a dropdown listing real-time risk alerts (e.g., high cash burn, declining margins).
+* **Advanced Simulations:** A dedicated tool to simulate financial scenarios and get AI-driven risk assessments.
 
-### 📊 Interactive Visualizations
+### 🌏 Multi-Language Support
+* **Global Localization:** Toggle seamlessly between **English** and **অসমীয়া (Assamese)** via a global language switcher.
+* **Localized UI:** Every chart label, sidebar link, and insight is translated for a native experience.
 
-* Dynamic charts and graphs powered by Chart.js
-* Track revenue, transactions, and growth trends
+### 👥 User Authentication & Data Privacy
+* **Secure Database Auth:** Robust SQLite-backed user registration and login system.
+* **User Data Isolation:** Every user manages their own private financial data; no data is shared between accounts.
 
-### 👥 User Authentication & Security
-
-* Secure login system
-* Role-based access control for data protection
-
-### 📱 Fully Responsive Design
-
-* Optimised for desktop, tablet, and mobile devices
-
-### 🌙 Dark & Light Mode
-
-* Seamless theme switching for enhanced usability
+### 📱 Premium Responsive Design
+* **Professional White Theme:** A clean, "Enterprise-Light" aesthetic using Tailwind CSS and Inter typography.
+* **Glassmorphism:** Modern UI components with subtle blurs and shadows.
+* **Lucide Icons:** High-quality vector iconography throughout the platform.
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### 🎨 Frontend
-
-* HTML5
-* Tailwind CSS
-* Chart.js
-* Google Fonts
-* Lucide Icons
+* HTML5 / CSS3 (Vanilla + Tailwind CSS)
+* **Chart.js:** For high-performance data visualizations.
+* **Lucide-Icons:** For modern UI iconography.
+* **Inter:** Premium typography from Google Fonts.
 
 ### ⚙️ Backend
+* **Python / Flask:** Core application framework.
+* **Flask-Login:** For secure session management.
+* **ReportLab:** For generating PDF business reports.
 
-* Python
-* Flask
-* Threading (for background updates)
-
-### 🗄️ Database & Session Management
-
-* SQLite3
-* Flask Sessions
+### 🗄️ Database
+* **SQLite3:** Relational database for users and business records.
 
 ### ☁️ Deployment
-
-* Render Cloud Hosting
-* Gunicorn Production Server
+* **Render:** Cloud hosting for web services.
+* **Gunicorn:** Production-grade WSGI server.
 
 ---
 
@@ -88,72 +83,48 @@ BizHealth provides business owners and teams with a centralized dashboard to:
 Follow these steps to run BizHealth locally:
 
 ### 1️⃣ Clone the repository
-
 ```bash
 git clone https://github.com/Dewri-Dev/buisness-dashboard.git
 cd buisness-dashboard
 ```
 
 ### 2️⃣ Create virtual environment
-
 ```bash
 python -m venv venv
-venv\Scripts\activate   # Windows
+# On Windows:
+venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
 ```
 
 ### 3️⃣ Install dependencies
-
 ```bash
 pip install -r requirements.txt
 ```
 
 ### 4️⃣ Run the application
-
 ```bash
 python app.py
 ```
 
-Open your browser and visit:
-
-```
-http://127.0.0.1:5000
-```
+Open your browser and visit: `http://127.0.0.1:5000`
 
 ---
 
 ## 📊 Dashboard Metrics
 
 BizHealth visualizes important business indicators such as:
-
-* 💰 Revenue trends
-* 🧾 Transactions overview
-* 📉 Expense tracking
-* 📈 Growth performance
-* 📊 Monthly business insights
-
----
-
-## 🔒 Security Features
-
-* Session-based authentication
-* Protected dashboard routes
-* Secure user login system
+* 💰 **Revenue Trends:** Smooth line charts for cash flow analysis.
+* 🍩 **Category Distribution:** Revenue share by unit (Sales, Salary, Marketing, etc.).
+* 📉 **Expense Tracking:** Monitoring spikes in operational costs.
+* 📈 **Growth signals:** Automated MoM percentage calculations.
+* 🛡️ **Vitality Index:** A circular score (0-100) based on overall business stability.
 
 ---
 
-## 🌟 Future Improvements
+## 👨‍💻 Authors
 
-* Multi-user analytics dashboards
-* Export reports (PDF & Excel)
-* Advanced financial forecasting
-* Notification & alert system
-* API integrations
-
----
-
-## 👨‍💻 Author
-
-**Nayan Dewri**,**Dwibon Bhargab Deka**,**Barnil Mahanta**,**Tanisha Deka**
+**Nayan Dewri**, **Dwibon Bhargab Deka**, **Barnil Mahanta**, **Tanisha Deka**
 
 Developer & Computer Science Student
 Assam, India
@@ -163,10 +134,6 @@ Assam, India
 ## ⭐ Support
 
 If you like this project:
-
 ⭐ Star the repository
 🍴 Fork it
 📢 Share it with others
-
----
-
